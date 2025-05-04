@@ -4,6 +4,7 @@ Flask-csp
 Flask-WTF
 Flask-Limiter
 Flask-Session
+git+https://github.com/fictivekin/flask-csp.git#egg=flask_csp 
 qrcode
 pyotp
 bcrypt

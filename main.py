@@ -1,12 +1,31 @@
 from flask import Flask, render_template, request, redirect, jsonify, session
 from flask_session import Session
-
+from flask_csp import CSP
 import user_management as dbHandler
 
 # Code snippet for logging a message
 # app.logger.critical("message")
 
-app = Flask(__name__)
+app = Flask(__name__) # App wide CSP Protection
+CSP(app,
+    base_uri=["'self'"],
+    default_src=["'self'"],
+    style_src=["'self'"],
+    script_src=["'https://'"],
+    img_src=["*"],
+    media_src=["'self'"],
+    font_src=["'self'"],
+    object_src=["'self'"],
+    child_src=["'self'"],
+    connect_src=["'self'"],
+    worker_src=["'self'"],
+    frame_src=["'none'"],
+    frame_ancestors=["'none'"],
+    form_action=["'self'"]
+)
+
+csp_ext = CSP()
+ 
 # ---------------- Configuration ----------------
 app.config["SESSION_PERMANENT"] = False     # Sessions expire when browser closes
 app.config["SESSION_TYPE"] = "filesystem"     # Store session data on the filesystem
