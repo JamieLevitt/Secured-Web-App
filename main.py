@@ -11,7 +11,7 @@ CSP(app,
     base_uri=["'self'"],
     default_src=["'self'"],
     style_src=["'self'"],
-    script_src=["'https://'"],
+    script_src=["'self"],
     img_src=["*"],
     media_src=["'self'"],
     font_src=["'self'"],
@@ -70,7 +70,7 @@ def signup():
         dbHandler.insertUser(username, password, DoB)
         return redirect("/success")
     else:
-        return render_template("/signup")
+        return render_template("/signup.html")
 
 @app.route("/", methods=["POST", "GET"])
 def home():
