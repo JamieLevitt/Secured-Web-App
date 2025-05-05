@@ -7,7 +7,7 @@ import user_management as dbHandler
 # app.logger.critical("message")
 
 app = Flask(__name__) 
-app.config.update( # Used for SameSite Cookies (Prevents CSRF Attacks)
+app.config.update( # Used for App-Wide SameSite Cookies (Prevents CSRF Attacks)
     SECRET_KEY = 'AJDLFKALDKBHAJFIHABJDKHBJagvjfouihigyuqbhajopidhuigyuvhjhjiuyigtfcghvjbkjiouyigftygyHUOJIHUIGYUVJBHKLIAOHU',
     SESSION_COOKIE_SAMESITE = 'Lax'
 )
