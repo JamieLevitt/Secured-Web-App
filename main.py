@@ -6,8 +6,13 @@ import user_management as dbHandler
 # Code snippet for logging a message
 # app.logger.critical("message")
 
-app = Flask(__name__) # App wide CSP Protection
-CSP(app,
+app = Flask(__name__) 
+app.config.update( # Used for SameSite Cookies (Prevents CSRF Attacks)
+    SECRET_KEY = 'AJDLFKALDKBHAJFIHABJDKHBJagvjfouihigyuqbhajopidhuigyuvhjhjiuyigtfcghvjbkjiouyigftygyHUOJIHUIGYUVJBHKLIAOHU',
+    SESSION_COOKIE_SAMESITE = 'Lax'
+)
+
+CSP(app, # App wide CSP Protection
     base_uri=["'self'"],
     default_src=["'self'"],
     style_src=["'self'"],
