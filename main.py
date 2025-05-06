@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify, session
 from flask_session import Session
 from flask_csp import CSP
 import user_management as dbHandler
+import bcrypt
 
 # Code snippet for logging a message
 # app.logger.critical("message")
@@ -67,12 +68,13 @@ def signup():
         return redirect("/success")
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]
+        password_bytes = request.form["password"].encode("utf-8")
+        hashed_pw      = bcrypt.hashpw(password_bytes, bcrypt.gensalt())             
         DoB = request.form["dob"]
         userData = dbHandler.retrieveUser(username)
         if userData:
             redirect("/")
-        dbHandler.insertUser(username, password, DoB)
+        dbHandler.insertUser(username, hashed_pw, DoB)
         return redirect("/success")
     else:
         return render_template("/signup.html")
@@ -87,15 +89,16 @@ def home():
         return redirect("/success")
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]
+        entered_bytes  = request.form["password"].encode("utf-8")
         userData = dbHandler.retrieveUser(username)
+        stored_bytes   = userData["pass"]           # bytes if your DB supports it
         if userData:
-            if password == userData["pass"]:
+            if bcrypt.checkpw(entered_bytes, stored_bytes):
                 session["user"] = username
                 app.logger.warning(session["user"])
                 return redirect("/success")
             else:
-                return jsonify({"pass": password, "stored": userData["pass"]})
+                return jsonify({"pass": entered_bytes, "stored": stored_bytes})
         else:
             return redirect("/")
     else:

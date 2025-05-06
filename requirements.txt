@@ -1,3 +1,4 @@
+bcrypt
 Flask
 Flask_cors
 Flask-csp
