@@ -91,7 +91,7 @@ def home():
         username = request.form["username"]
         entered_bytes  = request.form["password"].encode("utf-8")
         userData = dbHandler.retrieveUser(username)
-        stored_bytes   = userData["pass"]           # bytes if your DB supports it
+        stored_bytes   = userData["pass"]          
         if userData:
             if bcrypt.checkpw(entered_bytes, stored_bytes):
                 session["user"] = username
